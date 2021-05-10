@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {Home} from './Home';
+import {Home} from './components/HomePage';
 import {Category} from './Category';
 import {Book} from './Book';
 import {Navigation} from './Navigation';
@@ -17,8 +17,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
+
+  addToCart(item) {
+    console.log('cART');
+  }
 
   handleLogin() {
     console.log("login is working");
@@ -30,6 +35,9 @@ class App extends React.Component {
       <BrowserRouter>
       <Fragment>
         <NavMenu/>
+
+        <Route path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
+
 
         <Route path='/login' render={props => <Login {...props} handleLogin={this.handleLogin} />} />
         <Route path='/signup' component={Signup} />
