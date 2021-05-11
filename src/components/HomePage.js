@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import './styles/HomeProducts.css';
+import NotificationAlert from 'react-notification-alert';
 
 var success = { place: 'tl', message: (<div>Item added successful</div>), type: "success", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
 var unsuccess = { place: 'tl', message: (<div>Please login to start shopping</div>), type: "danger", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
@@ -17,6 +18,21 @@ export class Home extends Component{
         };
     }
 
+    onShowAlert = () => {
+        this.setState({ visible: true }, () => {
+            window.setTimeout(() => {
+                this.setState({ visible: false })
+            }, 2000)
+        });
+    }
+
+    noti() {
+        if (localStorage.getItem("id_token") !== null)
+            this.refs.notify.notificationAlert(success);
+        else
+            this.refs.notify.notificationAlert(unsuccess)
+    }
+
     componentDidMount() {
 
         fetch(process.env.REACT_APP_API+'home/Products')
@@ -24,38 +40,14 @@ export class Home extends Component{
         .then(data=>{
             this.setState({items:data});
         });
-
-/*
-        fetch(process.env.REACT_APP_API+"home/Products")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )*/
-
-
     }
 
     render(){
         const {items} = this.state
         return(
             <Fragment>
-                  
+
+                <NotificationAlert ref="notify" />
                 <div className="row">                 
                 {items.map(item => (
                         <div id="card-wrapper" className="cwrapper">
@@ -77,7 +69,7 @@ export class Home extends Component{
                                 </div>
                                 <div className="product-price-btn">
                                     <p><span id="price" >${item.ProductPrice}</span></p>
-                                    <button type="button">Add to cart</button>
+                                    <button onClick={() => { this.props.addToCart(JSON.stringify(item)); this.noti(); }} type="button">Add to cart</button>
                                 </div>
                             </div>
 

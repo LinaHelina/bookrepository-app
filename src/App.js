@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { NavMenu } from './components/NavigationBar';
 import {Login} from './components/SignInPage';
 import {Signup} from './components/SignUpPage';
+import "react-notification-alert/dist/animate.css";
 
 
 class App extends React.Component {
