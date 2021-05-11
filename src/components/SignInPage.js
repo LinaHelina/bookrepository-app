@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/SingPages.css';
+import AuthService from '../services/AuthentificationService';
 
 const initialState = {
     email: '',
@@ -10,14 +11,15 @@ const initialState = {
 }
 
 export class Login extends Component {
+
     constructor(props) {
         super(props);
         this.state = initialState;
+        this.Auth = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //handle login validation
     handleValidate = () => {
         let emailError = "", passwordError = "";
         if (!this.state.email.includes('@')) {
@@ -38,15 +40,14 @@ export class Login extends Component {
         }
     }
 
-    //handle change form events
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
     }
-    //handle submit form
+
     handleSubmit = (event) => {
         event.preventDefault();
         const isValid = this.handleValidate();
-        // check validation frontend first
+
         if (isValid) {   
             this.Auth.login(this.state.email, this.state.password)
                 .then(res => {
@@ -94,10 +95,6 @@ export class Login extends Component {
                             <div style={{ fontSize: 12, color: "red" }}>{this.state.passwordError}</div>
                             <input type="submit" class="fadeIn fourth" value="Log In" />
                         </form>
-
-                        <div id="formFooter">
-                            <a class="underlineHover" href="#">Forgot Password?</a>
-                        </div>
 
                     </div>
                 </div>
