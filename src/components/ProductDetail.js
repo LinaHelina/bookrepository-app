@@ -27,8 +27,8 @@ export class ProductDetail extends Component {
 
 
     componentDidMount() {
-        const id = 1;
-        fetch("/api/Home/Products/" + id)
+        const id = localStorage.getItem("PID");
+        fetch(process.env.REACT_APP_API+"home/Products/" + id)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -92,7 +92,7 @@ export class ProductDetail extends Component {
                         </div>
                     </div>
 
-                    {obj.map(item => (
+                    {items.map(item => (
                         <div className="text-center">
                         <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-warning">Add To Cart</button>
                     </div>
@@ -124,13 +124,11 @@ export class ProductDetail extends Component {
                         </tbody>
                     </table>    
                     
-                    {obj.map(item => (
                         <div className="text-center">
                             <Link style={{textAlign:"center"}} to="/">
                                 <button  type="button" className="btn btn-success">BACK TO HOME</button>
                             </Link>
                         </div>
-                    ))}
 
                </div>
             );

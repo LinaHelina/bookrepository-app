@@ -10,7 +10,7 @@ import { NavMenu } from './components/NavigationBar';
 import {Login} from './components/SignInPage';
 import {Signup} from './components/SignUpPage';
 import "react-notification-alert/dist/animate.css";
-
+import { ProductDetail } from './components/ProductDetail';
 
 class App extends React.Component {
 
@@ -57,11 +57,12 @@ class App extends React.Component {
       <Fragment>
         <NavMenu handleLogout={this.handleLogout} isLogin={this.state.isLogin}/>
 
-        <Route path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
+        <Route exact path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
 
 
         <Route path='/login' render={props => <Login {...props} handleLogin={this.handleLogin} />} />
         <Route path='/signup' component={Signup} />
+        <Route path='/productdetail' component={ProductDetail} />
       </Fragment>
       </BrowserRouter>
     );
