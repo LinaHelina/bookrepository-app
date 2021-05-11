@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './styles/ProductDetail.css';
+import NotificationAlert from 'react-notification-alert';
 
 var success = { place: 'tl', message: (<div>Item added successful</div>), type: "success", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
 var unsuccess = { place: 'tl', message: (<div>Please login to start shopping</div>), type: "danger", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
@@ -36,9 +37,6 @@ export class ProductDetail extends Component {
                         items: JSON.parse('[' + JSON.stringify(result) + ']')
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -49,6 +47,21 @@ export class ProductDetail extends Component {
         
     }
 
+    onShowAlert = () => {
+        this.setState({ visible: true }, () => {
+            window.setTimeout(() => {
+                this.setState({ visible: false })
+            }, 2000)
+        });
+    }
+    noti() {
+        if (localStorage.getItem("id_token") !== null)
+            this.refs.notify.notificationAlert(success);
+        else
+            this.refs.notify.notificationAlert(unsuccess)
+    }
+
+
     render() {
         const { error, isLoaded, items, obj } = this.state;           
         if (error) {
@@ -58,55 +71,38 @@ export class ProductDetail extends Component {
         } else {
             return (
                 <div className="container">
+                     <NotificationAlert ref="notify" />
                     <div className="container">
                         {items.map(item => (
-                            <h1>{item.name}</h1>
+                            <h1>{item.ProductName}</h1>
 
                         ))}
                         <div id="myCarousel" className="carousel slide" data-ride="carousel">
-                            {/* Indicators */}
                             <ol className="carousel-indicators">
                                 <li data-target="#myCarousel" data-slide-to={0} className="active" />
-                                <li data-target="#myCarousel" data-slide-to={1} />
-                                <li data-target="#myCarousel" data-slide-to={2} />
                             </ol>
-                            {/* Wrapper for slides */}
+
                             {items.map(item => (
                                 <div className="carousel-inner">
                                     <div className="item active">
-                                        <img src={item.imgUrl1} style={{ width: '100%', maxHeight: '400px', objectFit: "cover" }} />
-                                    </div>
-                                    <div className="item">
-                                        <img src={item.imgUrl2} style={{ width: '100%', maxHeight: '400px', objectFit: "cover" }} />
-                                    </div>
-                                    <div className="item">
-                                        <img src={item.imgUrl3} style={{ width: '100%', maxHeight: '400px', objectFit: "cover" }} />
+                                        <img src={item.ProductImage} style={{ width: '100%', maxHeight: '400px', objectFit: "cover" }} />
                                     </div>
                                 </div>
                             ))}
-                            {/* Left and right controls */}
-                            <a className="left carousel-control" href="#myCarousel" data-slide="prev">
-                                <span className="glyphicon glyphicon-chevron-left" />
-                                <span className="sr-only">Previous</span>
-                            </a>
-                            <a className="right carousel-control" href="#myCarousel" data-slide="next">
-                                <span className="glyphicon glyphicon-chevron-right" />
-                                <span className="sr-only">Next</span>
-                            </a>
                         </div>
                     </div>
 
                     {obj.map(item => (
                         <div className="text-center">
-                            <button  type="button" className="btn btn-warning">Add To Cart</button>
-                        </div>
+                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-warning">Add To Cart</button>
+                    </div>
                     ))}
 
                     <div className="container">
                         {items.map(item => (
                             <div className="panel panel-default">
                                 <div className="panel-heading"><b>Introduction: {item.name}</b></div>
-                                <div className="panel-body"></div>
+                                <div className="panel-body"> {item.ShortDescription}</div>
                             </div>
                         ))}
                     </div>
@@ -119,8 +115,13 @@ export class ProductDetail extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {items.map(item => (<tr><td>Operating System</td><td>{item.PublicationDate}</td></tr>))}
-                                                   </tbody>
+                            {items.map(item => (<tr><td>PublicationDate</td><td>{item.PublicationDate}</td></tr>))}
+                            {items.map(item => (<tr><td>PageAmount</td><td>{item.PageAmount}</td></tr>))}
+                            {items.map(item => (<tr><td>Publisher</td><td>{item.Publisher}</td></tr>))}
+                            {items.map(item => (<tr><td>Category</td><td>{item.Category}</td></tr>))}
+                            {items.map(item => (<tr><td>Language</td><td>{item.ProductLanguage}</td></tr>))}
+                            {items.map(item => (<tr><td>ISBN</td><td>{item.IsbnNumber}</td></tr>))}            
+                        </tbody>
                     </table>    
                     
                     {obj.map(item => (
