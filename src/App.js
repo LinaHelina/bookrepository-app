@@ -54,7 +54,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
       <Fragment>
-        <NavMenu/>
+        <NavMenu handleLogout={this.handleLogout} isLogin={this.state.isLogin}/>
 
         <Route path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
 

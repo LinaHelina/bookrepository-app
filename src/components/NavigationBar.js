@@ -34,18 +34,21 @@ export class NavMenu extends Component {
                         <NavItem>
                             <NavLink tag={Link} className="text-light" to="/">Home</NavLink>
                         </NavItem>
-
-                        <NavItem>
-                            <NavLink tag={Link} className="text-light" to="/login">Login/Register</NavLink>
-                        </NavItem>
-
-                        <NavItem>
-                            <NavLink tag={Link} className="text-light" to="/">Log out</NavLink>
-                        </NavItem>
-
-                        <NavItem>
-                            <NavLink tag={Link} className="text-light" to="/">Account</NavLink>
-                        </NavItem>
+                        {this.props.isLogin === false && // if not log in yet
+                                 <NavItem>
+                             <NavLink tag={Link} className="text-light" to="/login">Login/Register</NavLink>
+                                 </NavItem>
+                             }
+                             {this.props.isLogin === true && //if status is logged in
+                                 <NavItem onClick={this.props.handleLogout}>
+                             <NavLink tag={Link} className="text-light" to="/">Log Out</NavLink>
+                                 </NavItem>
+                             }
+                             {this.props.isLogin === true && //if status is logged in
+                                 <NavItem>
+                             <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
+                                 </NavItem>
+                             }
 
                     </ul>
                     
