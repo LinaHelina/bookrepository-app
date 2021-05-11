@@ -51,7 +51,7 @@ export class Signup extends Component {
         const isValid = this.handleValidate();
         // if passing validation from frontend
         if (isValid) {
-            axios.post('/api/Auth/Register', this.state)
+            axios.post(process.env.REACT_APP_API+'Authentification/Register', this.state)
                 // status 200 (good response) direct to login page
                 .then(response => { this.props.history.replace('/login'); })
                 // bad request catch error and setstate email error
