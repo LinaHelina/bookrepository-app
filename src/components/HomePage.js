@@ -53,7 +53,7 @@ export class Home extends Component{
                         <div id="card-wrapper" className="cwrapper">
                             
                             <div id="cproduct-img" className="cproduct-img">
-                                <Link to='/productdetail'>
+                            <Link to='/productdetail' onClick={()=>localStorage.setItem("PID", item.ProductId)}>
                                     <img id="thumbnail" src={item.ProductImageUrl} />
                                 </Link>
                             </div>
@@ -61,7 +61,7 @@ export class Home extends Component{
 
                             <div id="product-info" className="product-info">
                                 <div id="product-text" className="product-text">
-                                    <Link to='/productdetail'>
+                                <Link to='/productdetail' onClick={()=>localStorage.setItem("PID", item.ProductId)}>
                                         <h1><b>{item.ProductName}</b></h1>
                                     </Link>
                                     <br/>
