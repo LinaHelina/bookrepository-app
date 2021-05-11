@@ -13,10 +13,21 @@ import {Signup} from './components/SignUpPage';
 
 class App extends React.Component {
 
+  static displayName = App.name;
 
   constructor(props) {
     super(props);
+    if (localStorage.getItem('id_token') === null) // no token in local storage
+    this.state = {
+        isLogin: false,
+    };
+    else
+    this.state = {
+        isLogin: true,
+    };
+
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.addToCart = this.addToCart.bind(this);
   }
 
@@ -27,7 +38,16 @@ class App extends React.Component {
 
   handleLogin() {
     console.log("login is working");
+    this.setState({ isLogin: !this.state.isLogin });
   }
+
+  handleLogout() {
+    if (localStorage.getItem('id_token') !== null) { // if logged in
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('profile');
+        this.setState({ isLogin: !this.state.isLogin });
+    }      
+}
 
 
   render() {
