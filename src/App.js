@@ -13,6 +13,9 @@ import "react-notification-alert/dist/animate.css";
 import { ProductDetail } from './components/ProductDetail';
 import { Cart } from './components/Cart';
 import axios from 'axios';
+import { Checkout } from './components/Checkout';
+import { Confirm } from './components/Confirm';
+import { ThankYou } from './components/ThankYou';
 
 class App extends React.Component {
 
@@ -88,10 +91,14 @@ class App extends React.Component {
         <Route exact path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
 
 
+        <Route path='/checkout' component={Checkout} />
+
         <Route path='/login' render={props => <Login {...props} handleLogin={this.handleLogin} />} />
         <Route path='/signup' component={Signup} />
         <Route path='/productdetail' component={ProductDetail} />
         <Route path='/cart' render={props => <Cart {...props} isLogin={this.state.isLogin} cartChange={this.state.cartChange} />} />
+        <Route path='/thankyou' component={ThankYou} />
+        <Route path='/confirm' component={Confirm} />
       </Fragment>
       </BrowserRouter>
     );
