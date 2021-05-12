@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import AuthService from '../services/AuthentificationService';
-import CartColumns from './Cart/CartTotal';
+import CartTotal from './Cart/CartTotal';
 import CartItem from './Cart/CartItem';
-import CartTotal from './Cart/CartColumns';
+import CartColumns from './Cart/CartColumns';
 
 
 export class Cart extends Component {
@@ -26,7 +26,7 @@ export class Cart extends Component {
 
     handleIncrease(item){
         const newcart = this.state.carts.slice() 
-        newcart[newcart.findIndex(i => i.productId == item.ProductId)].quantity++; 
+        newcart[newcart.findIndex(i => i.ProductId == item.ProductId)].quantity++; 
         this.setState({ carts: newcart });      
         localStorage.setItem("cart", JSON.stringify(newcart)); 
     }
@@ -34,8 +34,8 @@ export class Cart extends Component {
 
     handleDecrease(item){
         const newcart = this.state.carts.slice() 
-        if (newcart[newcart.findIndex(i => i.productId == item.ProductId)].quantity > 1) {
-            newcart[newcart.findIndex(i => i.productId == item.ProductId)].quantity--;  
+        if (newcart[newcart.findIndex(i => i.ProductId == item.ProductId)].quantity > 1) {
+            newcart[newcart.findIndex(i => i.ProductId == item.ProductId)].quantity--;  
             this.setState({ carts: newcart });
             localStorage.setItem("cart", JSON.stringify(newcart));  
         }
@@ -77,7 +77,7 @@ export class Cart extends Component {
                     };
                     combined.push(this[a.ProductId]);
                 }
-                this[a.productId].quantity += a.quantity;
+                this[a.ProductId].quantity += a.quantity;
             }, Object.create(null));
 
             console.log("cart after combined", combined);
@@ -89,7 +89,7 @@ export class Cart extends Component {
 
     render() {
         const { carts, paid, isLogin } = this.state;
-        console.log(carts);
+        console.log("THIS IS CART",carts);
         if (isLogin == false)
             return (
 
