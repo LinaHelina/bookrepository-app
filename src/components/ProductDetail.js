@@ -22,7 +22,32 @@ export class ProductDetail extends Component {
     }
 
     addToCart(item) {
-      console.log('Added to cart');
+        if (localStorage.getItem("id_token")!=null) { 
+            if (localStorage.getItem("cart") != "[]") {
+                var myJsonObject = (item); 
+                myJsonObject.quantity = 1; 
+                myJsonObject = JSON.stringify(myJsonObject); 
+                var items = localStorage.getItem("cart").slice(0, -1).concat(',' + myJsonObject) + "]"; 
+                localStorage.setItem("cart", items); 
+            }
+            else {
+                var myJsonObject = (item); 
+                myJsonObject.quantity = 1; 
+                myJsonObject = "[" + JSON.stringify(myJsonObject) + "]"; 
+                localStorage.setItem("cart", myJsonObject);
+            }
+        }
+    }
+
+    getProductToAddCart() {
+        const id = localStorage.getItem("PID");
+        fetch(process.env.REACT_APP_API+"Home/Product/" + id)
+            .then(res => res.json())
+            .then(result => {
+                this.setState({
+                    obj: JSON.parse('[' + JSON.stringify(result) + ']')
+                })
+            })
     }
 
 
@@ -44,6 +69,7 @@ export class ProductDetail extends Component {
                     });
                 }
         );
+        this.getProductToAddCart();
         
     }
 
