@@ -53,7 +53,7 @@ export class NavMenu extends Component {
                     </ul>
                     
                     </Collapse>
-                    <Link to="/" className="cccard">
+                    <Link to="/cart" className="cccard">
                     <button id="cart" type="submit"><i className="glyphicon ml-auto glyphicon-shopping-cart" /> Cart</button>
                     </Link>
 

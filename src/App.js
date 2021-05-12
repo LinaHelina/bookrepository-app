@@ -12,6 +12,7 @@ import {Signup} from './components/SignUpPage';
 import "react-notification-alert/dist/animate.css";
 import { ProductDetail } from './components/ProductDetail';
 import { Cart } from './components/Cart';
+import axios from 'axios';
 
 class App extends React.Component {
 
