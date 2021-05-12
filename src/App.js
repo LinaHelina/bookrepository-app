@@ -58,7 +58,7 @@ class App extends React.Component {
   handleSaveCart() {
     const cartSave = localStorage.getItem('cart');
     const id = JSON.parse(localStorage.getItem('profile')).CustomerId;
-    axios.post((process.env.REACT_APP_API+'users/' + id + '/savecart'), JSON.parse(cartSave));
+    axios.post((process.env.REACT_APP_API+'user/' + id + '/savecart'), JSON.parse(cartSave));
   }
 
 

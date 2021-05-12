@@ -19,7 +19,7 @@ export default class AuthService {
         }).then(response => {
             this.setToken(response.token); // set token in local storage
             this.setProfile(response.token);   // set profile for user login
-            //this.setCart(response.token); // set cart for user
+            this.setCart(response.token); // set cart for user
             return Promise.resolve(response);
         })
     }
@@ -69,11 +69,11 @@ export default class AuthService {
         return JSON.parse(localStorage.getItem('profile')).CustomerId;
     }
 
-    /*
+    
     setCart(token) {
         //get user id from token
         const id = (decode(token)).CustomerId; console.log("test id", id);
-        axios.get('/api/users/'+id+'/cart') //get data from api
+        axios.get(process.env.REACT_APP_API+'user/'+id+'/cart') //get data from api
             .then(res => {
                 console.log('cart from api', res.data); //test cart api
                 if (res.status == 204) // if no content
@@ -83,7 +83,7 @@ export default class AuthService {
                     localStorage.setItem("cart", JSON.stringify(res.data));
             })    
     }
-    */
+    
 
     fetch(url, options) {
         // performs api calls sending the required authentication headers
