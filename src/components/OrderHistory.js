@@ -17,7 +17,7 @@ export class OrderHistory extends Component {
 
     componentDidMount() {
         const id = JSON.parse(localStorage.getItem('profile')).CustomerId;
-        fetch("/api/users/" + id + "/ordershistory")
+        fetch(process.env.REACT_APP_API+"user/" + id + "/ordershistory")
             .then(res => res.json())
             .then(
                 (result) => {

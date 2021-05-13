@@ -16,7 +16,7 @@ export class OrderDetail extends Component {
     componentDidMount() {
         const id = JSON.parse(localStorage.getItem('profile')).CustomerId;
 
-        fetch("/api/users/" + id + "/ordershistory")
+        fetch(process.env.REACT_APP_API+"user/" + id + "/ordershistory")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -26,9 +26,6 @@ export class OrderDetail extends Component {
                     });
                     
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -39,9 +36,9 @@ export class OrderDetail extends Component {
     }
 
     render() {
-        //take order from array
+
         const OID = localStorage.getItem("OID");
-        const order = this.state.detail.filter(x => x.orderId == OID);
+        const order = this.state.detail.filter(x => x.OrderId == OID);
         console.log("detail", order);
         return (
 
@@ -51,9 +48,9 @@ export class OrderDetail extends Component {
                     <div className="page-header"><h1>ORDER DETAILS</h1></div>
                     <div className="bose-orderDetail">
                         <p>
-                            <span className="bose-orderDetail__headerText"><b>Date:</b> {or.orderDate}</span>
+                            <span className="bose-orderDetail__headerText"><b>Date:</b> {or.OrderDate}</span>
                             <span className="bose-orderDetail__separator" />
-                            <span className="bose-orderDetail__headerText"><b>Order number:</b> KNN20192020{or.orderId}</span>
+                            <span className="bose-orderDetail__headerText"><b>Order number:</b> KNN20192020{or.OrderId}</span>
                             <button className="bose-orderDetail__cancelButton">Cancel order</button>
                         </p>
                         <div className="bose-orderDetail__summary">
@@ -67,9 +64,8 @@ export class OrderDetail extends Component {
                             <p className="bose-orderDetail__summarySection">
                                 <b className="bose-orderDetail__summarySectionTitle">Billing address:</b>
                                     {or.orderName}<br />
-                                    {or.orderShipAddress1} {or.orderShipAddress2}<br />
-                                    {or.orderShipCity}<br />
-                                    {or.orderShipState} {or.orderShipZip5}-{or.orderShipZip4}<br />                              
+                                    {or.orderShipAddress1}<br />
+                                    {or.orderShipCity}<br />                            
                             </p>
                             <div className="bose-orderDetail__summarySection">
                                 <b className="bose-orderDetail__summarySectionTitle">Order summary:</b>
@@ -94,8 +90,8 @@ export class OrderDetail extends Component {
                                 <div className="bose-orderDetail__items">
                                     <div className="bose-orderDetail__item">
                                         <div className="bose-orderDetail__itemSection bose-orderDetail__itemSection--product">
-                                            <img className="bose-orderDetail__itemImage" src={item.productUrl}/>
-                                            <p><b>{item.productName}</b></p>
+                                            <img className="bose-orderDetail__itemImage" src={item.ProductUrl}/>
+                                            <p><b>{item.ProductName}</b></p>
                                             Black
                                         </div>
 
@@ -117,9 +113,8 @@ export class OrderDetail extends Component {
                                         <div className="bose-orderDetail__itemSection">
                                             <b>Shipping address:</b><br />
                                             {or.orderName}<br />
-                                            {or.orderShipAddress1} {or.orderShipAddress2}<br />
-                                            {or.orderShipCity}<br />
-                                            {or.orderShipState} {or.orderShipZip5}-{or.orderShipZip4}<br />  
+                                            {or.orderShipAddress1}<br />
+                                            {or.orderShipCity}<br /> 
                                         </div>
 
                                         <div className="bose-orderDetail__itemSection">                                

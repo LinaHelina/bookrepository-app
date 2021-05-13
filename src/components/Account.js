@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from './_Services/AuthService';
+import AuthService from '../services/AuthentificationService';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
@@ -8,9 +8,8 @@ import NotificationAlert from 'react-notification-alert';
 var success = { place: 'tl', message: (<div>Update success!</div>), type: "success", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
 var unsuccess = { place: 'tl', message: (<div>Update unsuccess, please check again!</div>), type: "danger", icon: "now-ui-icons ui-1_bell-53", autoDismiss: 2 };
 
-
-
 export class Account extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +24,7 @@ export class Account extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
     }
+
     onShowAlert = () => {
         this.setState({ visible: true }, () => {
             window.setTimeout(() => {
@@ -32,6 +32,7 @@ export class Account extends Component {
             }, 2000)
         });
     }
+
     noti() {
         const isValid = this.handleValidate();
         if (isValid)
@@ -39,7 +40,8 @@ export class Account extends Component {
         else
             this.refs.notify.notificationAlert(unsuccess)
     }
-    //handle change form events
+
+
     handleChange = (event) => {
         this.setState({
             user: { ...this.state.user, [event.target.name]: event.target.value}          
@@ -72,26 +74,19 @@ export class Account extends Component {
         }
     }
 
-    //handle submit form
     handleUpdate = () => {
         const id = JSON.parse(localStorage.getItem("profile")).CustomerId;
 
         var userchange = {
-            newname: this.state.user.fullname,
-            newaddress1: this.state.user.address1,
-            newaddress2: this.state.user.address2,
-            newcity: this.state.user.city,
-            newstate: this.state.user.state,
-            newzip5: this.state.user.zip5,
-            newzip4: this.state.user.zip4,
-            newemail: this.state.user.email,
-            newpassword: this.state.user.password,
-            newpassword2: this.state.user.password2
+            newname: this.state.user.Fullname,
+            newaddress1: this.state.user.Address,
+            newemail: this.state.user.Email,
+            newpassword: this.state.user.Password
         }
         const isValid = this.handleValidate();
         // check validation frontend first
         if (isValid) {
-            axios.post('/api/users/' + id + '/update/', userchange)
+            axios.post(process.env.REACT_APP_API+'user/' + id + '/update/', userchange)
                 .then(res => {
                     this.setState({ user: res });
                     this.props.history.push('/');
@@ -103,11 +98,11 @@ export class Account extends Component {
    
 
     componentDidMount() {
-        //get id from profile after login
+
         if (this.state.isLogin == true) {
             const id = JSON.parse(localStorage.getItem("profile")).CustomerId;
 
-        axios.get("/api/users/" + id)
+        axios.get(process.env.REACT_APP_API+"user/" + id)
             .then(res => {
                 this.setState({ user: res.data });
                 this.setState({ user: { ...this.state.user, ["password2"]: "" } });
@@ -156,54 +151,19 @@ export class Account extends Component {
                                         <h5 className="mb-3"><b>Customer Profile</b></h5>
                                         <div className="row">
                                             <div className="col-md-6 page-header">
-                                                <h6><b>Fullname:</b>{" "}{user.fullname}</h6>
-                                                <h6><b>Email:</b>{"    "}{user.email}</h6>
-                                                <h6><b>Address1:</b>{" "}{user.address1}</h6>
-                                                <h6><b>Address2:</b>{" "}{user.address2}</h6>
-                                                <h6><b>City:</b>{"     "}{user.city}</h6>
-                                                <h6><b>State:</b>{"    "}{user.state}</h6>
-                                                <h6><b>Zipcode:</b>{"  "}{user.zip5} {user.zip4}</h6>
+                                                <h6><b>Fullname:</b>{" "}{user.Fullname}</h6>
+                                                <h6><b>Email:</b>{"    "}{user.Email}</h6>
+                                                <h6><b>Address1:</b>{" "}{user.Address}</h6>
+                                                <h6><b>City:</b>{"     "}{user.City}</h6>
+
                                                 
-                                            </div>
-                                            <div className="col-md-6">
-                                                <h6>Favorite Search</h6>
-                                                <a href="#" className="badge badge-dark badge-pill">Dell</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Work</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Apple</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Asus</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Acer</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Alienware</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Gaming</a>
-                                                <a href="#" className="badge badge-dark badge-pill">Study</a>
-                                                <hr />
-                                                <span className="badge badge-primary"><i className="fa fa-user" /> Verified Buyer</span>
-                                                <span className="badge badge-success"><i className="fa fa-cog" /> Diamond</span>
-                                                <span className="badge badge-danger"><i className="fa fa-eye" /> 15 Logs</span>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <h5 className="mt-2"><span className="fa fa-clock-o ion-clock float-right" /> <b>Recent Activity</b></h5>
-                                                <table className="table table-sm table-hover table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <strong>Last Login: </strong> {user.lastLogin}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <strong>Create Date: </strong> {user.dateCreated}
-                                                            </td>
-                                                        </tr>
-                                                        
-                                                    </tbody>
-                                                </table>
                                             </div>
                                         </div>
                                         {/*/row*/}
                                     </div>
                                     <div className="tab-pane" id="messages">
                                         <div className="alert alert-info alert-dismissable">
-                                            <a className="panel-close close" data-dismiss="alert">×</a> Congratulation! {user.fullname}. You earned <strong>1149</strong> Points reward. You need <strong>4951</strong> more points to get redeem.
+                                            <a className="panel-close close" data-dismiss="alert">×</a> Congratulation! {user.Fullname}. You earned <strong>1149</strong> Points reward. You need <strong>4951</strong> more points to get redeem.
                                         </div>
                                         <table className="table table-hover table-striped">
                                             <tbody>
@@ -240,7 +200,7 @@ export class Account extends Component {
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Full Name</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="fullname" className="form-control" type="text" value={user.fullname} placeholder="Enter your fullname"/>
+                                                    <input onChange={this.handleChange} name="fullname" className="form-control" type="text" value={user.Fullname} placeholder="Enter your fullname"/>
                                                 </div>
                                             </div>
                                             
@@ -248,62 +208,26 @@ export class Account extends Component {
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Address 1</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="address1" className="form-control" type="text" value={user.address1} placeholder="Enter your address" />
-                                                </div>
-                                            </div>
-                                            <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">Address 2</label>
-                                                <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="address2" className="form-control" type="text" value={user.address2} placeholder="apt #, PO box, Unit... (optional) " />
+                                                    <input onChange={this.handleChange} name="address1" className="form-control" type="text" value={user.Address} placeholder="Enter your address" />
                                                 </div>
                                             </div>
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">City</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="city" className="form-control" type="text" value={user.city} placeholder="Enter your city" />
+                                                    <input onChange={this.handleChange} name="city" className="form-control" type="text" value={user.City} placeholder="Enter your city" />
                                                 </div>
-                                            </div>
-                                            <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">State</label>
-                                                <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="state" className="form-control" type="text" value={user.state} placeholder="Enter your state" />
-                                                </div>
-                                            </div>
-                                            <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">Zipcode</label>
-                                                <div className="col-lg-4">
-                                                    <input onChange={this.handleChange} name="zip5" className="form-control" type="text" value={user.zip5} placeholder="Zip 5 number"/>
-                                                </div>
-                                                <div className="col-lg-4">
-                                                    <input onChange={this.handleChange} name="zip4" className="form-control" type="text" value={user.zip4} placeholder="Zip 4 number" />
-                                                </div>
-                                            </div>
-                                            <div className="form-group row">
-                                                {/*<label className="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                                <div className="col-lg-9">
-                                                    <select id="user_time_zone" className="form-control" size={0}>
-                                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                                        <option value="Alaska">(GMT-09:00) Alaska</option>
-                                                        <option value="Pacific Time (US & Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                                        <option value="Arizona">(GMT-07:00) Arizona</option>
-                                                        <option value="Mountain Time (US & Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                                        <option value="Central Time (US & Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                                        <option value="Eastern Time (US & Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                                    </select>
-                                                </div>*/}
                                             </div>
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Email</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="email" className="form-control" type="email" value={user.email}/>
+                                                    <input onChange={this.handleChange} name="email" className="form-control" type="email" value={user.Email}/>
                                                     <div style={{ fontSize: 12, color: "red" }}>{this.state.emailError}</div>
                                                 </div>
                                             </div>
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Password</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="password" className="form-control" type="password" value={user.password} />
+                                                    <input onChange={this.handleChange} name="password" className="form-control" type="password" value={user.Password} />
                                                     <div style={{ fontSize: 12, color: "red" }}>{this.state.passwordError}</div>
                                                 </div>
                                             </div>

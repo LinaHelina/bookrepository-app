@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import AuthService from './_Services/AuthService';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
-import './Checkout.css';
+import './styles/Checkout.css';
 import { Container } from 'reactstrap';
-import CartItem from './CartData/CartItem';
-import CartTotal from './CartData/CartTotal';
+import CartItem from './Cart/CartItem';
+import CartTotal from './Cart/CartTotal';
 import { Cart } from './Cart';
 import { Link } from 'react-router-dom';
 
@@ -18,9 +16,6 @@ export class Checkout extends Component {
         Address1: '', Address1Error: "",
         Address2: '', Address2Error: "",
         City: '', CityError: "",
-        State: '', StateError: "",
-        Zip5: '', Zip5Error: "",
-        Zip4: '', Zip4Error: "",
         ValidateResult: {},
         cardname: "", CardNameError: "",
         cardnumber: "", CardNumberError: "",
@@ -60,6 +55,7 @@ export class Checkout extends Component {
             return true;
         }
     }
+
     handleCheckPay = () => {
         let CardNameError = "", CardNumberError = "", ExpMonthError = "", ExpYearError = "", CvvError = "";
 
@@ -72,9 +68,7 @@ export class Checkout extends Component {
         if (!this.state.expyear.match(/^\d+$/) && this.state.expyear !== "")  ExpYearError = "* Exp Year must be number";
         if (this.state.expyear.length !== 4 && this.state.expyear !== "") ExpYearError = "* Exp Year must be 4 digits";
         if (!this.state.cvv) CvvError = "* Cvv cannot be blank";
-        if ((!this.state.cvv.match(/^\d+$/) && this.state.cvv !== "") || this.state.cvv.length !== 3) CvvError = "* Cvv must be 3 digits";
-
-        
+        if ((!this.state.cvv.match(/^\d+$/) && this.state.cvv !== "") || this.state.cvv.length !== 3) CvvError = "* Cvv must be 3 digits";      
 
         if (CardNameError || CardNumberError || ExpMonthError || ExpYearError || CvvError) {
             this.setState({ CardNameError: CardNameError, CardNumberError: CardNumberError, ExpMonthError: ExpMonthError, ExpYearError: ExpYearError, CvvError: CvvError });
@@ -90,9 +84,9 @@ export class Checkout extends Component {
         //get id from profile after login
 
         const id = JSON.parse(localStorage.getItem("profile")).CustomerId;
-        axios.get("/api/users/" + id)
+        axios.get(process.env.REACT_APP_API+"user/" + id)
             .then(res => {
-                this.setState({ Name: res.data.fullname, Address1: res.data.address1, Address2: res.data.address2, City:res.data.city, State:res.data.state, Zip5:res.data.zip5, Zip4:res.data.zip4 })
+                this.setState({ Name: res.data.Fullname, Address1: res.data.Address, City:res.data.City })
             })
             .catch(function (error) {
                 console.log('Fetch error: ' + error.message);
@@ -138,25 +132,9 @@ export class Checkout extends Component {
                                     <label><i className="fa fa-address-card-o"></i> Address 1</label>
                                     <input onChange={this.handleChange} value={Address1}  defaultValue={Address1} type="text1" id="adr1" name="Address1" placeholder="542 W. 15th Street" />
                                     <div style={{ fontSize: 12, color: "red" }}>{this.state.Address1Error}</div>
-                                    <label><i className="fa fa-address-card-o"></i> Address 2 (optional)</label>
-                                    <input onChange={this.handleChange} value={Address2} defaultValue={Address2} type="text1" id="adr2" name="Address2" placeholder="Apt 123" />
                                     <label><i className="fa fa-institution"></i> City</label>
                                     <input onChange={this.handleChange} value={City} defaultValue={City}  type="text1" id="city" name="City" placeholder="New York" />
 
-                                    <div className="row rrr">
-                                        <div className="col-50 c50">
-                                            <label>State</label>
-                                            <input onChange={this.handleChange} value={State} defaultValue={State} type="text1" id="state" name="State" placeholder="NY" />
-                                        </div>
-                                        <div className="col-50 c50">
-                                            <label>Zip 5</label>
-                                            <input onChange={this.handleChange} value={Zip5} defaultValue={Zip5} type="text1" id="zip" name="Zip5" placeholder="10001" />
-                                        </div>
-                                        <div className="col-50 c50">
-                                            <label>Zip 4</label>
-                                            <input onChange={this.handleChange} value={Zip4} defaultValue={Zip4}  type="text1" id="zip4" name="Zip4" placeholder="1111" />
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div className="col-50 c50">
@@ -240,9 +218,9 @@ export class Checkout extends Component {
                             <tbody>
                                 {cart.map(item => (
                                     <tr>
-                                        <td>{item.productName}</td>
+                                        <td>{item.ProductName}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.productPrice}</td>
+                                        <td>{item.ProductPrice}</td>
                                     </tr>
                                 ))}
                                 <div className="bose-orderDetail__summarySection">
