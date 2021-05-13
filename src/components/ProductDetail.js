@@ -98,16 +98,12 @@ export class ProductDetail extends Component {
             return (
                 <div className="container">
                      <NotificationAlert ref="notify" />
-                    <div className="container">
+                    <div className="text-center">
                         {items.map(item => (
                             <h1>{item.ProductName}</h1>
 
                         ))}
                         <div id="myCarousel" className="carousel slide" data-ride="carousel">
-                            <ol className="carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to={0} className="active" />
-                            </ol>
-
                             {items.map(item => (
                                 <div className="carousel-inner">
                                     <div className="item active">
@@ -118,28 +114,20 @@ export class ProductDetail extends Component {
                         </div>
                     </div>
 
-                    {items.map(item => (
-                        <div className="text-center">
-                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-warning">Add To Cart</button>
-                    </div>
-                    ))}
+                    <h1 style={{ color: 'white' }}>TEXT </h1>
 
                     <div className="container">
                         {items.map(item => (
                             <div className="panel panel-default">
-                                <div className="panel-heading"><b>Introduction: {item.name}</b></div>
+                                <div className="panel-heading"><b>Annotation: {item.name}</b></div>
                                 <div className="panel-body"> {item.ShortDescription}</div>
                             </div>
                         ))}
                     </div>
 
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Features</th>
-                                <th>Specs</th>
-                            </tr>
-                        </thead>
+                    <h3 style={{ color: 'white' }}>TEXT </h3>   
+
+                    <table className="table  table-hover">
                         <tbody>
                             {items.map(item => (<tr><td>PublicationDate</td><td>{item.PublicationDate}</td></tr>))}
                             {items.map(item => (<tr><td>PageAmount</td><td>{item.PageAmount}</td></tr>))}
@@ -148,13 +136,24 @@ export class ProductDetail extends Component {
                             {items.map(item => (<tr><td>Language</td><td>{item.ProductLanguage}</td></tr>))}
                             {items.map(item => (<tr><td>ISBN</td><td>{item.IsbnNumber}</td></tr>))}            
                         </tbody>
-                    </table>    
+                    </table> 
+
+                    {items.map(item => (
+                        <div className="text-center">
+                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-warning">Add To Cart</button>
+                    </div>
+                    ))}   
+
+                    <h3 style={{ color: 'white' }}>TEXT </h3>   
                     
                         <div className="text-center">
                             <Link style={{textAlign:"center"}} to="/">
                                 <button  type="button" className="btn btn-success">BACK TO HOME</button>
                             </Link>
                         </div>
+
+
+                        <h1 style={{ color: 'white' }}>TEXT </h1>
 
                </div>
             );

@@ -134,9 +134,6 @@ export class Account extends Component {
                                         <a href data-target="#profile" data-toggle="tab" className="nav-link active">Profile</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href data-target="#messages" data-toggle="tab" className="nav-link">Messages</a>
-                                    </li>
-                                    <li className="nav-item">
                                         <a href data-target="#edit" data-toggle="tab" className="nav-link">Update/Edit</a>
                                     </li>
                                     <li className="nav-item">
@@ -153,48 +150,13 @@ export class Account extends Component {
                                             <div className="col-md-6 page-header">
                                                 <h6><b>Fullname:</b>{" "}{user.Fullname}</h6>
                                                 <h6><b>Email:</b>{"    "}{user.Email}</h6>
-                                                <h6><b>Address1:</b>{" "}{user.Address}</h6>
-                                                <h6><b>City:</b>{"     "}{user.City}</h6>
-
-                                                
+                                                <h6><b>Address:</b>{" "}{user.Address}</h6>
+                                                <h6><b>City:</b>{"     "}{user.City}</h6>                                                
                                             </div>
                                         </div>
                                         {/*/row*/}
                                     </div>
-                                    <div className="tab-pane" id="messages">
-                                        <div className="alert alert-info alert-dismissable">
-                                            <a className="panel-close close" data-dismiss="alert">×</a> Congratulation! {user.Fullname}. You earned <strong>1149</strong> Points reward. You need <strong>4951</strong> more points to get redeem.
-                                        </div>
-                                        <table className="table table-hover table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <span className="float-right font-weight-bold">3 hrs ago</span> You got <strong>549</strong> points from your purchase!
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="float-right font-weight-bold">Yesterday</span> You got <strong>200</strong> points for Happy Day!
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="float-right font-weight-bold">9/10</span> You got <strong>50</strong> points from your lucky date!
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="float-right font-weight-bold">7/4</span> You got <strong>150</strong> points for July Four!
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span className="float-right font-weight-bold">5/4</span> You got <strong>200</strong> points from your purchase!
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    
                                     <div className="tab-pane" id="edit">
                                         <form role="form">
                                             <div className="form-group row">
@@ -252,11 +214,6 @@ export class Account extends Component {
                             <div className="col-lg-4 order-lg-1 text-center">
                                 <img src="https://cdn0.iconfinder.com/data/icons/management-1/100/business-05-512.png"
                                     className="mx-auto img-fluid img-circle d-block" alt="avatar" />
-                                <h6 className="mt-2">Upload a different photo</h6>
-                                <label className="custom-file">
-                                    <input type="file" id="file" className="custom-file-input" />
-                                    <span className="custom-file-control">Choose file</span>
-                                </label>
                             </div>
                         </div>
                     </div>

@@ -16,6 +16,9 @@ import axios from 'axios';
 import { Checkout } from './components/Checkout';
 import { Confirm } from './components/Confirm';
 import { ThankYou } from './components/ThankYou';
+import { OrderDetail } from './components/OrderDetail';
+import { OrderHistory } from './components/OrderHistory';
+import { Account } from './components/Account';
 
 class App extends React.Component {
 
@@ -92,13 +95,15 @@ class App extends React.Component {
 
 
         <Route path='/checkout' component={Checkout} />
-
+        <Route path='/account' render={props => <Account {...props} isLogin={this.state.isLogin} />} />
         <Route path='/login' render={props => <Login {...props} handleLogin={this.handleLogin} />} />
         <Route path='/signup' component={Signup} />
         <Route path='/productdetail' component={ProductDetail} />
         <Route path='/cart' render={props => <Cart {...props} isLogin={this.state.isLogin} cartChange={this.state.cartChange} />} />
         <Route path='/thankyou' component={ThankYou} />
         <Route path='/confirm' component={Confirm} />
+        <Route path='/history' component={OrderHistory} />
+        <Route path='/orderdetail' component={OrderDetail} />
       </Fragment>
       </BrowserRouter>
     );

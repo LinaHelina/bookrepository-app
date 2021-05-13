@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './OrderHistory.css';
+import './styles/OrderHistory.css';
 
 export class OrderHistory extends Component {
 

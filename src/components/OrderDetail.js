@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './OrderDetail.css';
+import './styles/OrderDetail.css';
 
 export class OrderDetail extends Component {
 
