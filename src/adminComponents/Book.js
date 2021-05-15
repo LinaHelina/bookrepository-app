@@ -13,16 +13,7 @@ export class Book extends Component{
         this.state={books:[], addModalShow:false, editModalShow:false}
     }
 
-    refreshList(){
-        fetch(process.env.REACT_APP_API+'Catalog/Products')
-        .then(response=>response.json())
-        .then(data=>{
-            this.setState({books:data});
-        });
-    }
-
     componentDidMount(){
-        //this.refreshList();
 
         axios.get(process.env.REACT_APP_API+"catalog/Products/")
             .then(res => {
@@ -35,16 +26,18 @@ export class Book extends Component{
 
     }
 
-
+    
     deleteBook(bookid){
         if(window.confirm('Are you sure?')){
-            fetch(process.env.REACT_APP_API+'book/'+bookid,{
+            fetch(process.env.REACT_APP_API+'Catalog/'+bookid,{
                 method:'DELETE',
                 header:{'Accept':'application/json',
             'Content-Type':'application/json'}
             })
         }
     }
+
+
     render(){
         const {books, bookId,bookTitle,bookAuthor,bookCategory,bookPD,bookLan,bookCover}=this.state;
         let addModalClose=()=>this.setState({addModalShow:false});
@@ -72,6 +65,14 @@ export class Book extends Component{
                                 <td>{book.ProductName}</td>
                                 <td>{book.ProductPrice}</td>
                                 <td>{book.ProductAuthor}</td>
+                                <ButtonToolbar>
+                    <Button className="mr-2" variant="danger"
+                    onClick={()=>this.deleteBook(book.ProductId)}>
+                        Delete
+                        </Button>
+
+                    </ButtonToolbar>
+
                             </tr>)}
                     </tbody>
 

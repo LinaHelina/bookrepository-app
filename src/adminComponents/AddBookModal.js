@@ -12,17 +12,9 @@ export class AddBookModal extends Component{
     photofilename = "anon.png";
     imagesrc = process.env.REACT_APP_COVERPATH+this.photofilename;
 
-    componentDidMount(){
-        fetch(process.env.REACT_APP_API+'catalog')
-        .then(response=>response.json())
-        .then(data=>{
-            this.setState({categories:data});
-        });
-    }
-
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'book',{
+        fetch(process.env.REACT_APP_API+'Catalog/AddProduct',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -34,6 +26,11 @@ export class AddBookModal extends Component{
                 Category:event.target.Category.value,
                 PublicationDate:event.target.PublicationDate.value,
                 Language:event.target.Language.value,
+                PageAmount:event.target.PageAmount.value,
+                ISBN:event.target.ISBN.value,
+                Publisher:event.target.Publisher.value,
+                Price:event.target.Price.value,
+                Description:event.target.Description.value,
                 BookCover:this.photofilename,
             })
         })
@@ -57,7 +54,7 @@ export class AddBookModal extends Component{
             event.target.files[0].name
         );
 
-        fetch(process.env.REACT_APP_API+'book/SaveFile',{
+        fetch(process.env.REACT_APP_API+'Catalog/SaveFile',{
             method:'POST',
             body:formData
         })
@@ -104,11 +101,15 @@ centered
                     </Form.Group>
 
                     <Form.Group controlId="Category">
-                        <Form.Label>Category</Form.Label>
-                        <Form.Control as="select">
-                        {this.state.categories.map(category=>
-                            <option key={category.CategoryId}>{category.CategoryName}</option>)}
-                        </Form.Control>
+                        <Form.Label>Book Category</Form.Label>
+                        <Form.Control type="text" name="Category" required 
+                        placeholder="Category"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="Publisher">
+                        <Form.Label>Book Publisher</Form.Label>
+                        <Form.Control type="text" name="Publisher" required 
+                        placeholder="Publisher"/>
                     </Form.Group>
 
                     <Form.Group controlId="PublicationDate">
@@ -118,33 +119,63 @@ centered
                         name="PublicationDate"
                         required
                         placeholder="PublicationDate"
-                        />
-                       
-                        
+                        />                       
                     </Form.Group>
+
+
+                    <Form.Group controlId="Description">
+                        <Form.Label>Book Description</Form.Label>
+                        <Form.Control type="textarea" name="Description" required 
+                        placeholder="Description"/>
+                    </Form.Group>   
+
+                    
+                <Form.Group controlId="Price">
+                        <Form.Label>Book Price</Form.Label>
+                        <Form.Control type="text" name="Price" required 
+                        placeholder="Price"/>
+                    </Form.Group>     
+
+                    <Form.Group controlId="ISBN">
+                        <Form.Label>Book ISBN</Form.Label>
+                        <Form.Control type="text" name="ISBN" required 
+                        placeholder="ISBN"/>
+                    </Form.Group>    
 
                     <Form.Group controlId="Language">
                         <Form.Label>Book Language</Form.Label>
                         <Form.Control type="text" name="Language" required 
                         placeholder="Language"/>
-                    </Form.Group>                    
+                    </Form.Group>      
+
+                    <Form.Group controlId="PageAmount">
+                        <Form.Label>Book Page Amount</Form.Label>
+                        <Form.Control type="text" name="PageAmount" required 
+                        placeholder="PageAmount"/>
+                    </Form.Group>  
 
                     <Form.Group>
                         <Button variant="primary" type="submit">
                             Add Book
                         </Button>
                     </Form.Group>
+                    
                 </Form>
             </Col>
 
             <Col sm={6}>
                 <Image width="200px" height="200px" src={this.imagesrc}/>
                 <input onChange={this.handleFileSelected} type="File"/>
+ 
             </Col>
         </Row>
     </Modal.Body>
     
     <Modal.Footer>
+
+                  
+
+
         <Button variant="danger" onClick={this.props.onHide}>Close</Button>
     </Modal.Footer>
 
