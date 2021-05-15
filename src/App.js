@@ -80,6 +80,9 @@ class App extends React.Component {
         localStorage.removeItem('profile');
         localStorage.removeItem('cart');
         localStorage.removeItem('PID');
+        localStorage.removeItem('ship');
+        localStorage.removeItem('confirm');
+        localStorage.removeItem('OID');
         this.setState({ isLogin: !this.state.isLogin });
     }      
   }

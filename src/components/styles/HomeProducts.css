@@ -5,7 +5,7 @@
     border-radius: 7px 7px 7px 7px;
     -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
-    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.45);
 }
 
 .cproduct-img {
@@ -107,11 +107,11 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #ffffff;
-    background-color: #9cebd5;
+    background-color: #56baed;
     cursor: pointer;
     outline: none;
 }
 
     .product-price-btn button:hover {
-        background-color: #79b0a1;
+        background-color: #1b658a;
     }

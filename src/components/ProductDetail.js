@@ -140,7 +140,7 @@ export class ProductDetail extends Component {
 
                     {items.map(item => (
                         <div className="text-center">
-                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-warning">Add To Cart</button>
+                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-success">Add To Cart</button>
                     </div>
                     ))}   
 
@@ -148,7 +148,7 @@ export class ProductDetail extends Component {
                     
                         <div className="text-center">
                             <Link style={{textAlign:"center"}} to="/">
-                                <button  type="button" className="btn btn-success">BACK TO HOME</button>
+                                <button  type="button" className = "btn btn-warning" style={{backgroundColor:'#56baed'}}>BACK TO HOME</button>
                             </Link>
                         </div>
 

@@ -27,9 +27,7 @@ export class Confirm extends Component {
         const confirm = JSON.parse(localStorage.getItem("confirm"));
         const ship = JSON.parse(localStorage.getItem("ship"));
         const items = JSON.parse(localStorage.getItem("cart"));
-        const sub = (items.reduce((sum, i) => (sum += i.quantity * i.ProductPrice), 0));
-        const tax = sub * 8.5 / 100;
-        const total = sub + tax;
+        const total = (items.reduce((sum, i) => (sum += i.quantity * i.productPrice), 0));
         return (
             <div>
                 <Container>
@@ -43,36 +41,35 @@ export class Confirm extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map(item => (<tr><td>{item.ProductName}</td><td>{item.quantity}</td><td>{item.ProductPrice}</td></tr>))}
-                        <b>Sub: $ </b>{sub.toFixed(2)}<br/>
-                        <b>Tax: $ </b>{tax.toFixed(2)}<br/>
+                        {items.map(item => (<tr><td>{item.productName}</td><td>{item.quantity}</td><td>{item.productPrice}</td></tr>))}
+                        <h3 style={{ color: 'white' }}>TEXT </h3>   
                         <b>Total: $ </b>{total.toFixed(2)}<br/>
+                       
                     </tbody>
                 </table>
-
+                <hr/>
                     <div className="panel panel-success">
-                    <div className="panel-heading"><b>Your Shipping Address: </b></div>
+                    <div className="panel-heading"><b>Perconal data & Shipping Address: </b></div>
                     <div className="panel-body">
 
-                            {ship.name}<br/>
-                            {ship.address1}<br />
-                            {ship.city}<br />
+                            {ship.Name}<br/>
+                            {ship.Address1}<br />
+                            {ship.City}<br />
                     </div>
                     </div>
-
+                    <hr/>
                     <div className="panel panel-success">
-                        <div className="panel-heading"><b>Your Payment: </b></div>
+                        <div className="panel-heading"><b>Payment info: </b></div>
                         <div className="panel-body">
-                            Visa<br/>
                             {confirm.cardname}<br />
                             xxxx-xxxx-xxxx-{confirm.cardnumber.slice(-4)}<br />
                             {confirm.expyear}<br />
                         </div>
                     </div>
 
-
-                <Link to='/thankyou'>
-                        <button onClick={() => this.handleOrderHistory()} type="button" class="btn btn-success">Pay now</button>
+                    <h3 style={{ color: 'white' }}>TEXT </h3>   
+                <Link to='/thankyou'  >
+                        <button  onClick={() => this.handleOrderHistory()} type="button" class="btn btn-success" style={{backgroundColor:'#56baed'}}>Pay now</button>
                     </Link>
                     </Container>
             </div>

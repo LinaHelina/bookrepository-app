@@ -34,7 +34,9 @@ export class Checkout extends Component {
     handleClick = () => {
         const isValid = this.handleCheckPay();
         console.log(isValid)
-        console.log(this.state.ValidateResult.address1)
+        console.log(this.state.ValidateResult.address1);
+        localStorage.setItem("ship", JSON.stringify(this.state));
+        console.log('Stateeeee', this.state);
         if (isValid && this.state.ValidateResult.address1 !== null) {
             localStorage.setItem("confirm", JSON.stringify(this.state));
             this.props.history.push('/confirm');
@@ -114,9 +116,7 @@ export class Checkout extends Component {
     render() {
         const { Name, Address1,  City,  cardname, cardnumber, expmonth, expyear, cvv } = this.state;
         const cart = JSON.parse(localStorage.getItem("cart"));
-        const sub = cart.reduce((sum, i) => (sum += i.quantity * i.productPrice), 0);
-        const tax = sub * 8.5 / 100;
-        const total = sub + tax;
+        const total = cart.reduce((sum, i) => (sum += i.quantity * i.productPrice), 0);
         return (
             <div className="row rrr">
                 <div className="page-header" style={{ marginLeft: '50px' }}><h1>CHECKOUT INFORMATION</h1></div>
@@ -192,9 +192,6 @@ export class Checkout extends Component {
                                 ))}
                                 <div className="bose-orderDetail__summarySection">
                                     <b className="bose-orderDetail__summarySectionTitle">Order summary:</b>
-                                <div className="bose-orderDetail__priceRow">
-                                    <span>Subtotal:</span><span>${sub.toFixed(2)}</span>
-                                </div>
                                 <div className="bose-orderDetail__priceRow">
                                     <span>Total:</span><span>${total.toFixed(2)}</span>
                                 </div>

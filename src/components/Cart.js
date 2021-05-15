@@ -148,7 +148,7 @@ export class Cart extends Component {
                 <p>PLEASE LOGIN TO VIEW OR ADD ITEMS TO CART</p>
                 <br/>
                 <Link to="/login">
-                    <button type="button" className="btn btn-success">LOGIN</button>
+                    <button type="button"  className="btn btn-success"  style={{backgroundColor:'#56baed'}}>LOGIN</button>
                 </Link>
               </div>
 
@@ -212,7 +212,7 @@ export class Cart extends Component {
                 <p>PLEASE ADD PRODUCT TO YOUR CART TO PURCHASE!</p>
                 <br/>
                 <Link to="/">
-                    <button type="button" className="btn btn-success">BEGIN SHOPPING</button>
+                    <button type="button"  style={{backgroundColor:'#56baed'}} className="btn btn-success">BEGIN SHOPPING</button>
                 </Link>
               </div>
             

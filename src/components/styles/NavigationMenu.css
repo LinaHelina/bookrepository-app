@@ -20,12 +20,13 @@ ul.navbar NavLink, ul.navbar NavLink:active{
 }
 .navbar{
     height: auto !important;
+    background-color: #1b658a;
 }
 .navbar-inverse{
     color: rgb(0, 22, 145);
 }
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .55);
 }
 
 #cart {

@@ -27,9 +27,6 @@ export class OrderHistory extends Component {
                     });
                     console.log("his", result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -60,20 +57,20 @@ export class OrderHistory extends Component {
                                 </div>
                             </div>
                         {his.map(order => (
-                            <Link to='/orderdetail' onClick={()=>localStorage.setItem("OID", order.orderId)}>
+                            <Link to='/orderdetail' onClick={()=>localStorage.setItem("OID", order.OrderId)}>
                             <div class="order-rows-container">                           
                                 <div class="flex-row order-row">
-                                    <div class="flex-item order-row-item order-num">NNP20192020{order.orderId}</div>
-                                    <div class="flex-item order-row-item">{order.orderDate}</div>
-                                    <div class="flex-item order-row-item num-of-items">{order.numberOfItems}</div>
-                                    <div class="flex-item order-row-item">{order.orderTotal}</div>
+                                    <div class="flex-item order-row-item order-num">20192020{order.OrderId}</div>
+                                    <div class="flex-item order-row-item">{order.OrderDate}</div>
+                                    <div class="flex-item order-row-item num-of-items">{order.NumberOfItems}</div>
+                                    <div class="flex-item order-row-item">{order.OrderTotal}</div>
                                     <div class="flex-end-cap"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
                                 </div>
                             </div>
                             </Link>
                         ))}
                         <Link style={{textAlign:"center"}} to="/account">
-                            <button  type="button" className="btn btn-success">ACCOUNT</button>
+                            <button  type="button" className="btn btn-success"  style={{backgroundColor:'#56baed'}}>ACCOUNT</button>
                         </Link>
                         </div>
                     </div>

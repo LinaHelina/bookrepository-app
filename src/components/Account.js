@@ -50,20 +50,11 @@ export class Account extends Component {
 
     handleValidate = () => {
         let emailError = "", passwordError = "", password2Error = "";
-        if (!this.state.user.email.includes('@')) {
+        if (!this.state.user.Email.includes('@')) {
             emailError = "* Invalid email";
         }
-        if (!this.state.user.email) {
+        if (!this.state.user.Email) {
             emailError = "* Email cannot be blank";
-        }
-        if (!this.state.user.password) {
-            passwordError = "* Password cannot be blank";
-        }
-        if (!this.state.user.password2) {
-            password2Error = "* Password needs to be confirmed";
-        }
-        if ((this.state.user.password !== this.state.user.password2)) {
-            password2Error = "* Password does not match!";
         }
         if (emailError || passwordError || password2Error) {
             this.setState({ emailError: emailError, passwordError: passwordError, password2Error: password2Error });
@@ -78,18 +69,18 @@ export class Account extends Component {
         const id = JSON.parse(localStorage.getItem("profile")).CustomerId;
 
         var userchange = {
-            newname: this.state.user.Fullname,
-            newaddress1: this.state.user.Address,
+            newname: this.state.user.fullname,
+            newaddress1: this.state.user.address1,
             newemail: this.state.user.Email,
-            newpassword: this.state.user.Password
+            newpassword: this.state.user.PasswordHashed
         }
+        console.log(userchange);
         const isValid = this.handleValidate();
-        // check validation frontend first
         if (isValid) {
             axios.post(process.env.REACT_APP_API+'user/' + id + '/update/', userchange)
                 .then(res => {
                     this.setState({ user: res });
-                    this.props.history.push('/');
+                    this.props.history.push('/account');
                 });
             console.log("user now", this.state.user);
             console.log("profile will edit", userchange)
@@ -138,16 +129,17 @@ export class Account extends Component {
                                     </li>
                                     <li className="nav-item">
                                         <Link to='/history'>
-                                            <button type="button" class="btn btn-success">Order History</button>
+                                            <button type="button" class="btn btn-success"  style={{backgroundColor:'#56baed'}}>Order History</button>
                                         </Link>
                                     </li>
                                     
                                 </ul>
-                                <div className="tab-content py-4 page-">
-                                    <div className="tab-pane active" id="profile">
+                                
+                                <div className="tab-content py-2 page-">
+                                    <div className="tab-pane " id="profile">
                                         <h5 className="mb-3"><b>Customer Profile</b></h5>
                                         <div className="row">
-                                            <div className="col-md-6 page-header">
+                                            <div className="col-md-4 page-header">
                                                 <h6><b>Fullname:</b>{" "}{user.Fullname}</h6>
                                                 <h6><b>Email:</b>{"    "}{user.Email}</h6>
                                                 <h6><b>Address:</b>{" "}{user.Address}</h6>
@@ -157,18 +149,18 @@ export class Account extends Component {
                                         {/*/row*/}
                                     </div>
                                     
-                                    <div className="tab-pane" id="edit">
+                                    <div className="tab-pane active" id="edit">
                                         <form role="form">
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Full Name</label>
                                                 <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="fullname" className="form-control" type="text" value={user.Fullname} placeholder="Enter your fullname"/>
+                                                    <input onChange={this.handleChange} name="fullname" className="form-control" type="text" value={this.state.user.Fullname} placeholder="Enter your fullname"/>
                                                 </div>
                                             </div>
                                             
                                             
                                             <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">Address 1</label>
+                                                <label className="col-lg-3 col-form-label form-control-label">Address</label>
                                                 <div className="col-lg-9">
                                                     <input onChange={this.handleChange} name="address1" className="form-control" type="text" value={user.Address} placeholder="Enter your address" />
                                                 </div>
@@ -187,23 +179,9 @@ export class Account extends Component {
                                                 </div>
                                             </div>
                                             <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">Password</label>
-                                                <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="password" className="form-control" type="password" value={user.Password} />
-                                                    <div style={{ fontSize: 12, color: "red" }}>{this.state.passwordError}</div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group row">
-                                                <label className="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                                <div className="col-lg-9">
-                                                    <input onChange={this.handleChange} name="password2" className="form-control" type="password" placeholder="Confrim your password" />
-                                                    <div style={{ fontSize: 12, color: "red" }}>{this.state.password2Error}</div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label" />
                                                 <div className="col-lg-9">
-                                                    <input type="reset" className="btn btn-secondary" defaultValue="Cancel" />
+                                                    <input type="reset" className="btn btn-secondary"/>
                                                     <input onClick={() => { this.handleUpdate(); this.noti(); }} type="button" className="btn btn-primary" defaultValue="Save Changes" />
                                                 </div>
                                             </div>

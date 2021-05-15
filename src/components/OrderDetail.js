@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './styles/OrderDetail.css';
 
 export class OrderDetail extends Component {
@@ -50,43 +51,33 @@ export class OrderDetail extends Component {
                         <p>
                             <span className="bose-orderDetail__headerText"><b>Date:</b> {or.OrderDate}</span>
                             <span className="bose-orderDetail__separator" />
-                            <span className="bose-orderDetail__headerText"><b>Order number:</b> KNN20192020{or.OrderId}</span>
-                            <button className="bose-orderDetail__cancelButton">Cancel order</button>
+                            <span className="bose-orderDetail__headerText"><b>Order number:</b>20192020{or.OrderId}</span>
                         </p>
                         <div className="bose-orderDetail__summary">
                             <p className="bose-orderDetail__summarySection">
                                 <b className="bose-orderDetail__summarySectionTitle">Payment:</b>
                                 Visa<br />
-                                {or.cardName}<br/>
-                                xxxx-xxxx-xxxx-{or.cardNumber.slice(-4)}
+                                {or.CardName}<br/>
+                                xxxx-xxxx-xxxx-{or.CardNumber.slice(-4)}
                             </p>
 
                             <p className="bose-orderDetail__summarySection">
                                 <b className="bose-orderDetail__summarySectionTitle">Billing address:</b>
-                                    {or.orderName}<br />
-                                    {or.orderShipAddress1}<br />
-                                    {or.orderShipCity}<br />                            
+                                    {or.OrderName}<br />
+                                    {or.OrderShipAddress1}<br />
+                                    {or.OrderShipCity}<br />                            
                             </p>
                             <div className="bose-orderDetail__summarySection">
                                 <b className="bose-orderDetail__summarySectionTitle">Order summary:</b>
                                 <div className="bose-orderDetail__priceSummary">
                                     <div className="bose-orderDetail__priceRow">
-                                        <span>Subtotal:</span><span>${(or.orderTotal/(108.5/100)).toFixed(2)}</span>
-                                    </div>
-                                    <div className="bose-orderDetail__priceRow">
-                                        <span>Shipping:</span><span>FREE</span>
-                                    </div>
-                                    <div className="bose-orderDetail__priceRow">
-                                            <span>Tax:</span><span>${(or.orderTotal - (or.orderTotal / (108.5 / 100))).toFixed(2)}</span>
-                                    </div>
-                                    <div className="bose-orderDetail__priceRow">
-                                            <span>Total:</span><span>${or.orderTotal.toFixed(2)}</span>
+                                            <span>Total:</span><span>${or.OrderTotal.toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
                             </div>
 
-                            {or.orderDetails.map(item => (
+                            {or.OrderDetails.map(item => (
                                 <div className="bose-orderDetail__items">
                                     <div className="bose-orderDetail__item">
                                         <div className="bose-orderDetail__itemSection bose-orderDetail__itemSection--product">
@@ -97,12 +88,12 @@ export class OrderDetail extends Component {
 
                                         <div className="bose-orderDetail__itemSection--status">
                                             <p><b>Quantity:</b></p>
-                                            {item.quantity}
+                                            {item.Quantity}
                                         </div>
 
                                         <div className="bose-orderDetail__itemSection--status">
                                             <p><b>Price:</b></p>
-                                            ${item.salePrice}
+                                            ${item.SalePrice}
                                         </div>
 
                                         <div className="bose-orderDetail__itemSection bose-orderDetail__itemSection--status">
@@ -112,15 +103,9 @@ export class OrderDetail extends Component {
 
                                         <div className="bose-orderDetail__itemSection">
                                             <b>Shipping address:</b><br />
-                                            {or.orderName}<br />
-                                            {or.orderShipAddress1}<br />
-                                            {or.orderShipCity}<br /> 
-                                        </div>
-
-                                        <div className="bose-orderDetail__itemSection">                                
-                                            <a className="bose-orderDetail__itemAction">Return</a>
-                                            <a className="bose-orderDetail__itemAction">Support</a>
-                                            <a className="bose-orderDetail__itemAction">Write a review</a>
+                                            {or.OrderName}<br />
+                                            {or.OrderShipAddress1}<br />
+                                            {or.OrderShipCity}<br /> 
                                         </div>
                                     </div>
                                 </div>
@@ -128,6 +113,11 @@ export class OrderDetail extends Component {
                         </div>
                     </div>
                 ))}
+
+                
+                            <Link style={{textAlign:"center"}} to="/history">
+                                     <button  type="button" className="btn btn-success" style={{backgroundColor:'#56baed'}}>ORDER HISTORY</button>
+                            </Link>
             </div>
         );
     }
