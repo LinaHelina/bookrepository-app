@@ -120,24 +120,15 @@ export class Account extends Component {
                     <div className="container">
                         <div className="row my-2">
                             <div className="col-lg-8 order-lg-2">
-                                <ul className="nav nav-tabs">
-                                    <li className="nav-item">
-                                        <a href data-target="#profile" data-toggle="tab" className="nav-link active">Profile</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href data-target="#edit" data-toggle="tab" className="nav-link">Update/Edit</a>
-                                    </li>
-                                    <li className="nav-item">
                                         <Link to='/history'>
                                             <button type="button" class="btn btn-success"  style={{backgroundColor:'#56baed'}}>Order History</button>
                                         </Link>
-                                    </li>
+                                <hr></hr>
+                                <div>
                                     
-                                </ul>
-                                
-                                <div className="tab-content py-2 page-">
-                                    <div className="tab-pane " id="profile">
-                                        <h5 className="mb-3"><b>Customer Profile</b></h5>
+                                    <div className="tab-pane active" id="edit">
+
+                                    <h5 className="mb-3"><b>Customer Profile</b></h5>
                                         <div className="row">
                                             <div className="col-md-4 page-header">
                                                 <h6><b>Fullname:</b>{" "}{user.Fullname}</h6>
@@ -146,10 +137,10 @@ export class Account extends Component {
                                                 <h6><b>City:</b>{"     "}{user.City}</h6>                                                
                                             </div>
                                         </div>
-                                        {/*/row*/}
-                                    </div>
-                                    
-                                    <div className="tab-pane active" id="edit">
+                                        
+                                        <h3>Edit your profile:</h3>
+                                        <hr/>
+                                        
                                         <form role="form">
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label">Full Name</label>

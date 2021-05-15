@@ -49,6 +49,11 @@ export class NavMenu extends Component {
                              <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
                                  </NavItem>
                              }
+                            {this.props.isLogin === true && //if status is logged in
+                                 <NavItem>
+                             <NavLink tag={Link} className="text-light" to="/catalog">Catalog</NavLink>
+                                 </NavItem>
+                             }
 
                     </ul>
                     

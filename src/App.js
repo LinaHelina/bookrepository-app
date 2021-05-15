@@ -83,6 +83,7 @@ class App extends React.Component {
         localStorage.removeItem('ship');
         localStorage.removeItem('confirm');
         localStorage.removeItem('OID');
+        localStorage.removeItem('order');
         this.setState({ isLogin: !this.state.isLogin });
     }      
   }
@@ -99,6 +100,7 @@ class App extends React.Component {
 
         <Route path='/checkout' component={Checkout} />
         <Route path='/account' render={props => <Account {...props} isLogin={this.state.isLogin} />} />
+        <Route path='/catalog' render={props => <Book {...props} isLogin={this.state.isLogin} />} />
         <Route path='/login' render={props => <Login {...props} handleLogin={this.handleLogin} />} />
         <Route path='/signup' component={Signup} />
         <Route path='/productdetail' component={ProductDetail} />

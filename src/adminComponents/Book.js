@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Table} from 'react-bootstrap';
+import axios from 'axios';
 
 import {Button,ButtonToolbar} from 'react-bootstrap';
 import {AddBookModal} from './AddBookModal';
@@ -13,7 +14,7 @@ export class Book extends Component{
     }
 
     refreshList(){
-        fetch(process.env.REACT_APP_API+'book')
+        fetch(process.env.REACT_APP_API+'Catalog/Products')
         .then(response=>response.json())
         .then(data=>{
             this.setState({books:data});
@@ -21,7 +22,17 @@ export class Book extends Component{
     }
 
     componentDidMount(){
-        this.refreshList();
+        //this.refreshList();
+
+        axios.get(process.env.REACT_APP_API+"catalog/Products/")
+            .then(res => {
+                this.setState({ books: res.data });
+            })
+            .catch(function (error) {
+                console.log('Fetch error: ' + error.message);
+            });
+        
+
     }
 
 
@@ -39,65 +50,34 @@ export class Book extends Component{
         let addModalClose=()=>this.setState({addModalShow:false});
         let editModalClose=()=>this.setState({editModalShow:false});
         return(
-            <div >
-                <Table className="mt-4" striped bordered hover size="sm">
+            <div style={{width:"80%", margin:'20px auto'}}>
+
+                <div class="page-header">
+                        <h1>ADMIN CRUD</h1>
+                        </div>
+                <Table className="mt-4" striped bordered hover size="sm" style={{width:"70%", margin:'20px auto'}}>
                     <thead>
                         <tr>
                             <th>BookId</th>
                         <th>Book Title</th>
+                        <th>Book Price</th>
                         <th>Book Author</th>
-                        <th>Book Category</th>
-                        <th>Book Publication Date</th>
-                        <th>Book Language</th>
-                        <th>Book Сover</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {books.map(book=>
-                            <tr key={book.BookId}>
-                                <td>{book.BookId}</td>
-                                <td>{book.BookTitle}</td>
-                                <td>{book.BookAuthor}</td>
-                                <td>{book.BookCategory}</td>
-                                <td>{book.BookPublicationDate}</td>
-                                <td>{book.BookLanguage}</td>
-                                <td>{book.BookCover}</td>
-                                <td>
-<ButtonToolbar>
-    <Button className="mr-2" variant="info"
-    onClick={()=>this.setState({editModalShow:true,
-        bookId:book.BookId,bookTitle:book.BookTitle,bookAuthor:book.BookAuthor,
-        bookCategory:book.BookCategory,bookPD:book.BookPublicationDate,bookLan:book.BookLanguage,bookCover:book.BookCover})}>
-            Edit
-        </Button>
-
-        <Button className="mr-2" variant="danger"
-    onClick={()=>this.deleteBook(book.BookId)}>
-            Delete
-        </Button>
-
-        <EditBookModal show={this.state.editModalShow}
-        onHide={editModalClose}
-        bookId={bookId}
-        bookTitle={bookTitle}
-        bookAuthor={bookAuthor}
-        bookCategory={bookCategory}
-        bookPD={bookPD}
-        bookLan={bookLan}
-        bookCover={bookCover}
-        />
-
-        
-</ButtonToolbar>
-
-                                </td>
-
+                            <tr key={book.ProductId}>
+                                <td>{book.ProductId}</td>
+                                <td>{book.ProductName}</td>
+                                <td>{book.ProductPrice}</td>
+                                <td>{book.ProductAuthor}</td>
                             </tr>)}
                     </tbody>
 
                 </Table>
                 <ButtonToolbar>
-                    <Button variant='primary'
+                    <Button variant='primary' style={{margin:'20px auto'}}
                     onClick={()=>this.setState({addModalShow:true})}>
                     Add Book</Button>
 
