@@ -10,7 +10,7 @@ export class Book extends Component{
 
     constructor(props){
         super(props);
-        this.state={books:[], addModalShow:false, editModalShow:false, details:[]}
+        this.state={books:[], addModalShow:false, editModalShow:false, details:[], Category:null}
     }
 
     componentDidMount(){
@@ -24,7 +24,6 @@ export class Book extends Component{
             });       
 
     }
-
     
     deleteBook(bookid){
         if(window.confirm('Are you sure?')){
@@ -32,15 +31,31 @@ export class Book extends Component{
                 method:'DELETE',
                 header:{'Accept':'application/json',
             'Content-Type':'application/json'}
-            })
+            });
         }
     }
 
+    editBook(bookId){
+        axios.get(process.env.REACT_APP_API+"catalog/"+bookId)
+        .then(res => {
+            this.setState({ details: res.data });
+        })
+        .catch(function (error) {
+            console.log('Fetch error: ' + error.message);
+        }); 
+        
+        this.setState({editModalShow:true, Category: this.state.details.Category});
+        //this.setState({editModalShow:true,
+        //    ProductId:this.state.book.ProductId,Title:this.state.book.ProductName,Author:this.state.book.ProductAuthor, Price: this.state.book.ProductPrice, Category: this.state.details.Category});
+    }
+
+
 
     render(){
-        const {books, ProductId, Title,Author, Price}=this.state;
+        const {books, ProductId, Title,Author, Price, Category, details}=this.state;
         let addModalClose=()=>this.setState({addModalShow:false});
         let editModalClose=()=>this.setState({editModalShow:false});
+        console.log(details,this.state.editModalShow);
         return(
             <div style={{width:"80%", margin:'20px auto'}}>
 
@@ -68,8 +83,7 @@ export class Book extends Component{
                     <ButtonToolbar>
 
                     <Button className="mr-2" variant="info"
-    onClick={()=>this.setState({editModalShow:true,
-        ProductId:book.ProductId,Title:book.ProductName,Author:book.ProductAuthor, Price: book.ProductPrice})}>
+                    onClick={()=>this.editBook(book.ProductId)}>
             Edit
         </Button>
                     <Button className="mr-2" variant="danger"
@@ -77,12 +91,20 @@ export class Book extends Component{
                         Delete
                         </Button>
                         <EditBookModal show={this.state.editModalShow}
-        onHide={editModalClose}
-        ProductId={ProductId}
-        Title={Title}
-        Author={Author}
-        Price={Price}
-        />
+                                onHide={editModalClose}
+                                ProductId={details.ProductId}
+                                Title={details.ProductName}
+                                Author={book.ProductAuthor}
+                                Price={details.Price}
+                                Category={details.Category}
+                                Publisher={details.Publisher}
+                                ShortDescription={details.ShortDescription}
+                                IsbnNumber={details.IsbnNumber}
+                                Language={details.ProductLanguage}
+                                PageAmount={details.PageAmount}
+                                Price={book.ProductPrice}
+                                ProductImage={details.ProductImage}
+                                />
 
                     </ButtonToolbar>
                     </td>

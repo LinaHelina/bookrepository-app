@@ -1,9 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {Home} from './components/HomePage';
-import {Category} from './adminComponents/Category';
 import {Book} from './adminComponents/Book';
-import {Navigation} from './adminComponents/Navigation';
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { NavMenu } from './components/NavigationBar';

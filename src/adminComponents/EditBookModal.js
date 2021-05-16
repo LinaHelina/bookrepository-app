@@ -26,7 +26,7 @@ export class EditBookModal extends Component{
                 Title:event.target.Title.value,
                 Author:event.target.Author.value,
                 Category:event.target.Category.value,
-                PublicationDate:event.target.PublicationDate.value,
+                PublicationDate:this.props.PublicationDate,
                 Language:event.target.Language.value,
                 PageAmount:event.target.PageAmount.value,
                 ISBN:event.target.ISBN.value,
@@ -132,7 +132,7 @@ centered
                     <Form.Group controlId="Category">
                         <Form.Label>Book Category</Form.Label>
                         <Form.Control type="text" name="Category" required
-                        defaultValue={details.Category} 
+                        defaultValue={this.props.Category} 
                         placeholder="Category"/>
                     </Form.Group>
 
@@ -140,25 +140,14 @@ centered
                     <Form.Group controlId="Publisher">
                         <Form.Label>Book Publisher</Form.Label>
                         <Form.Control type="text" name="Publisher" required 
-                        defaultValue={this.state.details.Publisher} 
+                        defaultValue={this.props.Publisher} 
                         placeholder="Publisher"/>
-                    </Form.Group>
-
-                    <Form.Group controlId="PublicationDate">
-                        <Form.Label>Publication Date</Form.Label>
-                        <Form.Control 
-                        type="date"
-                        name="PublicationDate"
-                        required
-                        placeholder="PublicationDate"
-                        defaultValue={this.state.details.PublicationDate}
-                        />
                     </Form.Group>
 
                     <Form.Group controlId="Description">
                         <Form.Label>Book Description</Form.Label>
                         <Form.Control type="textarea" name="Description" required 
-                        defaultValue={this.state.details.ShortDescription}
+                        defaultValue={this.props.ShortDescription}
                         placeholder="Description"/>
                     </Form.Group>   
 
@@ -172,21 +161,21 @@ centered
                     <Form.Group controlId="ISBN">
                         <Form.Label>Book ISBN</Form.Label>
                         <Form.Control type="text" name="ISBN" required 
-                        defaultValue={this.state.details.IsbnNumber}
+                        defaultValue={this.props.IsbnNumber}
                         placeholder="ISBN"/>
                     </Form.Group>  
 
                     <Form.Group controlId="Language">
                         <Form.Label>Book Language</Form.Label>
                         <Form.Control type="text" name="Language" required 
-                        defaultValue={this.state.details.ProductLanguage}
+                        defaultValue={this.props.Language}
                         placeholder="Language"/>
                     </Form.Group> 
 
                     <Form.Group controlId="PageAmount">
                         <Form.Label>Book Page Amount</Form.Label>
                         <Form.Control type="text" name="PageAmount" required 
-                         defaultValue={this.state.details.PageAmount}
+                         defaultValue={this.props.PageAmount}
                         placeholder="PageAmount"/>
                     </Form.Group> 
 
@@ -200,7 +189,7 @@ centered
 
             <Col sm={6}>
                 <Image width="200px" height="200px" 
-                 src={process.env.REACT_APP_COVERPATH+details.ProductImage}/>
+                 src={this.props.ProductImage}/>
                 <input onChange={this.handleFileSelected} type="File"/>
             </Col>
         </Row>
