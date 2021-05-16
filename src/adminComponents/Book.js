@@ -10,7 +10,7 @@ export class Book extends Component{
 
     constructor(props){
         super(props);
-        this.state={books:[], addModalShow:false, editModalShow:false}
+        this.state={books:[], addModalShow:false, editModalShow:false, details:[]}
     }
 
     componentDidMount(){
@@ -21,8 +21,7 @@ export class Book extends Component{
             })
             .catch(function (error) {
                 console.log('Fetch error: ' + error.message);
-            });
-        
+            });       
 
     }
 
@@ -39,7 +38,7 @@ export class Book extends Component{
 
 
     render(){
-        const {books, bookId,bookTitle,bookAuthor,bookCategory,bookPD,bookLan,bookCover}=this.state;
+        const {books, ProductId, Title,Author, Price}=this.state;
         let addModalClose=()=>this.setState({addModalShow:false});
         let editModalClose=()=>this.setState({editModalShow:false});
         return(
@@ -65,13 +64,28 @@ export class Book extends Component{
                                 <td>{book.ProductName}</td>
                                 <td>{book.ProductPrice}</td>
                                 <td>{book.ProductAuthor}</td>
-                                <ButtonToolbar>
+                                <td>
+                    <ButtonToolbar>
+
+                    <Button className="mr-2" variant="info"
+    onClick={()=>this.setState({editModalShow:true,
+        ProductId:book.ProductId,Title:book.ProductName,Author:book.ProductAuthor, Price: book.ProductPrice})}>
+            Edit
+        </Button>
                     <Button className="mr-2" variant="danger"
                     onClick={()=>this.deleteBook(book.ProductId)}>
                         Delete
                         </Button>
+                        <EditBookModal show={this.state.editModalShow}
+        onHide={editModalClose}
+        ProductId={ProductId}
+        Title={Title}
+        Author={Author}
+        Price={Price}
+        />
 
                     </ButtonToolbar>
+                    </td>
 
                             </tr>)}
                     </tbody>

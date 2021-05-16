@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import {Modal,Button, Row, Col, Form,Image} from 'react-bootstrap';
+import axios from 'axios';
 
 export class EditBookModal extends Component{
     constructor(props){
         super(props);
-        this.state={categories:[]};
+        this.state={details:[]};
         this.handleSubmit=this.handleSubmit.bind(this);
         this.handleFileSelected=this.handleFileSelected.bind(this);
     }
@@ -12,30 +13,27 @@ export class EditBookModal extends Component{
     photofilename = "anonymous.png";
     imagesrc = process.env.REACT_APP_COVERPATH+this.photofilename;
 
-    componentDidMount(){
-        fetch(process.env.REACT_APP_API+'catalog')
-        .then(response=>response.json())
-        .then(data=>{
-            this.setState({categories:data});
-        });
-    }
-
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'book',{
+        fetch(process.env.REACT_APP_API+'Catalog',{
             method:'PUT',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                BookId: event.target.BookId.value,
+                ProductId: event.target.ProductId.value,
                 Title:event.target.Title.value,
                 Author:event.target.Author.value,
                 Category:event.target.Category.value,
                 PublicationDate:event.target.PublicationDate.value,
                 Language:event.target.Language.value,
-                Cover:this.photofilename
+                PageAmount:event.target.PageAmount.value,
+                ISBN:event.target.ISBN.value,
+                Publisher:event.target.Publisher.value,
+                Price:event.target.Price.value,
+                Description:event.target.Description.value,
+                BookCover:this.photofilename,
 
             })
         })
@@ -46,6 +44,18 @@ export class EditBookModal extends Component{
         (error)=>{
             alert('Failed');
         })
+    }
+
+    componentDidMount()
+    {
+        axios.get(process.env.REACT_APP_API+"catalog/"+this.props.ProductId)
+            .then(res => {
+                this.setState({ details: res.data });
+            })
+            .catch(function (error) {
+                console.log('Fetch error: ' + error.message);
+            });     
+            
     }
 
 
@@ -59,7 +69,7 @@ export class EditBookModal extends Component{
             event.target.files[0].name
         );
 
-        fetch(process.env.REACT_APP_API+'book/SaveFile',{
+        fetch(process.env.REACT_APP_API+'Catalog/SaveFile',{
             method:'POST',
             body:formData
         })
@@ -74,6 +84,9 @@ export class EditBookModal extends Component{
     }
 
     render(){
+        const {details}=this.state;
+        
+        console.log(details.result);
         return (
             <div className="container">
 
@@ -94,34 +107,41 @@ centered
             <Col sm={6}>
                 <Form onSubmit={this.handleSubmit}>
                     
-                <Form.Group controlId="BookId">
-                        <Form.Label>BookId</Form.Label>
-                        <Form.Control type="text" name="BookId" required 
-                        placeholder="BookId"
+                <Form.Group controlId="ProductId">
+                        <Form.Label>ProductId</Form.Label>
+                        <Form.Control type="text" name="ProductId" required 
+                        placeholder="ProductId"
                         disabled
-                        defaultValue={this.props.bookId}/>
+                        defaultValue={this.props.ProductId}/>
                     </Form.Group>
 
                     <Form.Group controlId="Title">
                         <Form.Label>Book Title</Form.Label>
                         <Form.Control type="text" name="Title" required 
-                        defaultValue={this.props.bookTitle}
+                        defaultValue={this.props.Title}
                         placeholder="Title"/>
                     </Form.Group>
 
                     <Form.Group controlId="Author">
                         <Form.Label>Book Author</Form.Label>
                         <Form.Control type="text" name="Author" required 
-                        defaultValue={this.props.bookAuthor}
+                        defaultValue={this.props.Author}
                         placeholder="Author"/>
                     </Form.Group>
-   
+
                     <Form.Group controlId="Category">
-                        <Form.Label>Category</Form.Label>
-                        <Form.Control as="select" defaultValue={this.props.bookCategory}>
-                        {this.state.categories.map(category=>
-                            <option key={category.CategoryId}>{category.CategoryName}</option>)}
-                        </Form.Control>
+                        <Form.Label>Book Category</Form.Label>
+                        <Form.Control type="text" name="Category" required
+                        defaultValue={details.Category} 
+                        placeholder="Category"/>
+                    </Form.Group>
+
+                    
+                    <Form.Group controlId="Publisher">
+                        <Form.Label>Book Publisher</Form.Label>
+                        <Form.Control type="text" name="Publisher" required 
+                        defaultValue={this.state.details.Publisher} 
+                        placeholder="Publisher"/>
                     </Form.Group>
 
                     <Form.Group controlId="PublicationDate">
@@ -131,15 +151,43 @@ centered
                         name="PublicationDate"
                         required
                         placeholder="PublicationDate"
-                        defaultValue={this.props.bookPD}
+                        defaultValue={this.state.details.PublicationDate}
                         />
                     </Form.Group>
+
+                    <Form.Group controlId="Description">
+                        <Form.Label>Book Description</Form.Label>
+                        <Form.Control type="textarea" name="Description" required 
+                        defaultValue={this.state.details.ShortDescription}
+                        placeholder="Description"/>
+                    </Form.Group>   
+
+                    <Form.Group controlId="Price">
+                        <Form.Label>Book Price</Form.Label>
+                        <Form.Control type="text" name="Price" required 
+                        defaultValue={this.props.Price}
+                        placeholder="Price"/>
+                    </Form.Group>     
+
+                    <Form.Group controlId="ISBN">
+                        <Form.Label>Book ISBN</Form.Label>
+                        <Form.Control type="text" name="ISBN" required 
+                        defaultValue={this.state.details.IsbnNumber}
+                        placeholder="ISBN"/>
+                    </Form.Group>  
 
                     <Form.Group controlId="Language">
                         <Form.Label>Book Language</Form.Label>
                         <Form.Control type="text" name="Language" required 
-                        defaultValue={this.props.bookLan}
+                        defaultValue={this.state.details.ProductLanguage}
                         placeholder="Language"/>
+                    </Form.Group> 
+
+                    <Form.Group controlId="PageAmount">
+                        <Form.Label>Book Page Amount</Form.Label>
+                        <Form.Control type="text" name="PageAmount" required 
+                         defaultValue={this.state.details.PageAmount}
+                        placeholder="PageAmount"/>
                     </Form.Group> 
 
                     <Form.Group>
@@ -152,7 +200,7 @@ centered
 
             <Col sm={6}>
                 <Image width="200px" height="200px" 
-                 src={process.env.REACT_APP_COVERPATH+this.props.photofilename}/>
+                 src={process.env.REACT_APP_COVERPATH+details.ProductImage}/>
                 <input onChange={this.handleFileSelected} type="File"/>
             </Col>
         </Row>
