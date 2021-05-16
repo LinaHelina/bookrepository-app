@@ -20,6 +20,7 @@ export default class AuthService {
             this.setToken(response.token); // set token in local storage
             this.setProfile(response.token);   // set profile for user login
             this.setCart(response.token); // set cart for user
+            console.log(response.token);
             return Promise.resolve(response);
         })
     }
@@ -52,6 +53,11 @@ export default class AuthService {
     // get token from local storage
     getToken() {
         localStorage.getItem('id_token');
+    }
+
+    getRole(){
+        if(this.loggedIn())
+        return JSON.parse(localStorage.getItem('profile')).CustomerRole;
     }
 
     // delete token and profile data from local storage

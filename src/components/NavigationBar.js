@@ -2,14 +2,14 @@ import React, { Component} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './styles/NavigationMenu.css';
+import AuthService from '../services/AuthentificationService';
 
 export class NavMenu extends Component {
 
     static displayName = NavMenu.name;
 
-    constructor() {
-        super();
-   
+    constructor(props) {
+        super(props);
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = { collapsed: true };
     }
@@ -22,6 +22,7 @@ export class NavMenu extends Component {
 
 
     render(){
+        console.log(this.props.isAdmin);
         return(
             <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-inverse border-bottom box-shadow mb-1" >
                 <Link to={"/"}>     
@@ -39,17 +40,17 @@ export class NavMenu extends Component {
                              <NavLink tag={Link} className="text-light" to="/login">Login/Register</NavLink>
                                  </NavItem>
                              }
-                             {this.props.isLogin === true && //if status is logged in
+                             {this.props.isLogin === true &&  //if status is logged in
                                  <NavItem onClick={this.props.handleLogout}>
                              <NavLink tag={Link} className="text-light" to="/">Log Out</NavLink>
                                  </NavItem>
                              }
-                             {this.props.isLogin === true && //if status is logged in
+                             {this.props.isLogin === true  && //if status is logged in
                                  <NavItem>
                              <NavLink tag={Link} className="text-light" to="/account">Account</NavLink>
                                  </NavItem>
                              }
-                            {this.props.isLogin === true && //if status is logged in
+                            {this.props.isAdmin=== true && //if status is logged in
                                  <NavItem>
                              <NavLink tag={Link} className="text-light" to="/catalog">Catalog</NavLink>
                                  </NavItem>

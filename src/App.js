@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {Home} from './components/HomePage';
+import AuthService from './services/AuthentificationService';
 import {Book} from './adminComponents/Book';
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -24,16 +25,25 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
+
     if (localStorage.getItem('id_token') === null) // no token in local storage
     this.state = {
         isLogin: false,
     };
-    else
-    this.state = {
+    if ((JSON.parse(localStorage.getItem('profile')).CustomerRole) === "1") {
+      this.state = {
         isLogin: true,
-        cartChange: false
-    };
-
+        cartChange: false,
+        isAdmin:true
+      };        
+    } else {
+      this.state = {
+        isLogin: true,
+        cartChange: false,
+        isAdmin:false
+      };   
+     
+    }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -88,10 +98,13 @@ class App extends React.Component {
 
 
   render() {
+
+    console.log(this.state.isAdmin);
+    console.log(this.state);
     return (
       <BrowserRouter>
       <Fragment>
-        <NavMenu handleLogout={this.handleLogout} isLogin={this.state.isLogin}/>
+        <NavMenu handleLogout={this.handleLogout} isLogin={this.state.isLogin} isAdmin={this.state.isAdmin}/>
 
         <Route exact path='/' render={props => <Home {...props} addToCart={this.addToCart} />} />
 
