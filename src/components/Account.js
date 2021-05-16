@@ -72,7 +72,7 @@ export class Account extends Component {
             newname: this.state.user.fullname,
             newaddress1: this.state.user.address1,
             newemail: this.state.user.Email,
-            newpassword: this.state.user.PasswordHashed
+            newcity: this.state.user.city,
         }
         console.log(userchange);
         const isValid = this.handleValidate();
@@ -172,7 +172,7 @@ export class Account extends Component {
                                             <div className="form-group row">
                                                 <label className="col-lg-3 col-form-label form-control-label" />
                                                 <div className="col-lg-9">
-                                                    <input type="reset" className="btn btn-secondary"/>
+                                                
                                                     <input onClick={() => { this.handleUpdate(); this.noti(); }} type="button" className="btn btn-primary" defaultValue="Save Changes" />
                                                 </div>
                                             </div>
