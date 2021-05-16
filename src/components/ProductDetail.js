@@ -138,12 +138,6 @@ export class ProductDetail extends Component {
                         </tbody>
                     </table> 
 
-                    {items.map(item => (
-                        <div className="text-center">
-                        <button onClick={() => { this.addToCart(item); this.noti(); }} type="button" className="btn btn-success">Add To Cart</button>
-                    </div>
-                    ))}   
-
                     <h3 style={{ color: 'white' }}>TEXT </h3>   
                     
                         <div className="text-center">

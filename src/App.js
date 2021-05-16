@@ -30,7 +30,7 @@ class App extends React.Component {
     this.state = {
         isLogin: false,
     };
-    if ((JSON.parse(localStorage.getItem('profile')).CustomerRole) === "1") {
+    else if ((JSON.parse(localStorage.getItem('profile')).CustomerRole) === "1") {
       this.state = {
         isLogin: true,
         cartChange: false,
@@ -52,7 +52,7 @@ class App extends React.Component {
 
 
   addToCart(item) {
-    if (this.state.isLogin === true) { // if loggin
+    if (this.state.isLogin === true) {
         if (localStorage.getItem("cart") !== "[]") {
             var myJsonObject = JSON.parse(item); 
             myJsonObject.quantity = 1;
